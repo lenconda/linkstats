@@ -1,0 +1,53 @@
+{
+  "name": "linkstats",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "export NODE_ENV=development; ts-node app/app.ts",
+    "serve": "pm2 start --interpreter node_modules/.bin/ts-node app/app.ts --name Intruders",
+    "build": "npm run lint && tsc",
+    "clean": "npm run clean:build",
+    "clean:build": "rm -rf dist",
+    "test": "echo: \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 7.6"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/chai-http": "^3.0.4",
+    "@types/dotenv": "^6.1.1",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/kcors": "^2.2.2",
+    "@types/koa": "^2.0.43",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-logger": "^3.1.0",
+    "@types/koa-router": "^7.0.27",
+    "@types/md5": "^2.1.33",
+    "@types/mongoose": "^5.5.6",
+    "@types/node": "^9.4.0",
+    "@types/nodemailer": "^6.2.0",
+    "@types/uuid": "^3.4.4",
+    "ndb": "^1.0.33",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.7.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "kcors": "^2.2.1",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-custom-response": "^0.2.2",
+    "koa-logger": "^3.1.0",
+    "koa-router": "^7.4.0",
+    "md5": "^2.2.1",
+    "mongoose": "^5.6.0",
+    "nodemailer": "^6.2.1",
+    "reflect-metadata": "^0.1.12",
+    "routing-controllers": "^0.7.7",
+    "typedi": "^0.7.2",
+    "uuid": "^3.3.2"
+  }
+}
