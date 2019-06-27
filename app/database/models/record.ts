@@ -4,6 +4,7 @@ import { RecordMongo } from '../../interfaces'
 const schema = new mongoose.Schema({
   uuid: { type: String, index: true, required: true, unique: true },
   belongs: { type: String, required: true },
+  time: Number,
   ip: String,
   ipLocation: {
     as: String,
