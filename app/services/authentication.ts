@@ -1,7 +1,7 @@
 import { Service } from 'typedi'
 import { UserModel } from '../database/models/user'
 import md5 from 'md5'
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 import * as messages from '../../messages'
 import {
   ForbiddenError,
@@ -11,7 +11,8 @@ import {
 import { generateUuid } from '../util/uuid'
 import uuidv4 from 'uuid/v4'
 import { sendMail } from '../util/mail'
-import config from '../../config'
+// import config from '../../config'
+import { generateToken } from '../util/authorization'
 
 @Service()
 export default class AuthenticationService {
@@ -24,10 +25,7 @@ export default class AuthenticationService {
         name: result.name
       }
       return {
-        token: jwt.sign(
-            payload,
-            'linkstats',
-            config.isDev ? null : { expiresIn: '600000' })
+        token: generateToken(payload)
       }
     } else
       throw new ForbiddenError(messages.ERR_LOGIN_DISMATCH)

@@ -8,12 +8,12 @@ import {
 import AuthenticationService from '../services/authentication'
 import { Inject } from 'typedi'
 
-@JsonController('/')
+@JsonController('/auth')
 export default class HelloController {
   @Inject()
   service: AuthenticationService
 
-  @Post('login')
+  @Post('/login')
   async login(
       @BodyParam('email') email: string,
       @BodyParam('password') password: string) {
@@ -21,7 +21,7 @@ export default class HelloController {
     return result
   }
 
-  @Post('register')
+  @Post('/register')
   async register(
       @BodyParam('email') email: string,
       @BodyParam('password') password: string,
@@ -30,7 +30,7 @@ export default class HelloController {
     return result
   }
 
-  @Get('active')
+  @Get('/active')
   async active(
       @QueryParam('user') uuid: string,
       @QueryParam('code') code: string) {
@@ -38,13 +38,13 @@ export default class HelloController {
     return result
   }
 
-  @Get('forgot')
+  @Get('/forgot')
   async forgot(@QueryParam('user') email: string) {
     const result = await this.service.forgot(email)
     return result
   }
 
-  @Post('reset')
+  @Post('/reset')
   async reset(
       @BodyParam('uuid') uuid: string,
       @BodyParam('code') code: string,
