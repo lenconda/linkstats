@@ -57,3 +57,7 @@ jspm_packages/
 
 # jerbrains
 .idea
+
+# test file
+test.ts
+test.js

@@ -7,8 +7,8 @@ const schema = new mongoose.Schema({
   originalUrl: { type: String, required: true },
   shorternUrl: { type: String, required: true },
   qrCode: { type: String, required: true },
-  createTime: { type: Number, default: Date.parse(new Date().toString())},
-  updateTime: { type: Number, default: 0 }
+  createTime: { type: Number },
+  updateTime: { type: Number }
 })
 
 export const LinkModel =

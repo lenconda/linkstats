@@ -40,7 +40,7 @@ useKoaServer(app, {
   authorizationChecker: async (action: Action) => validateToken(action.request.headers['authorization'].substring(7)),
   currentUserChecker: async (action: Action) => getUserIDByToken(action.request.headers['authorization'].substring(7)).id,
   defaults: {
-    paramOptions: { required: true }
+    paramOptions: { required: false }
   },
   defaultErrorHandler: false,
   classTransformer: false,
