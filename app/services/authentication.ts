@@ -11,6 +11,7 @@ import {
 import { generateUuid } from '../util/uuid'
 import uuidv4 from 'uuid/v4'
 import { sendMail } from '../util/mail'
+import config from '../../config'
 
 @Service()
 export default class AuthenticationService {
@@ -23,7 +24,10 @@ export default class AuthenticationService {
         name: result.name
       }
       return {
-        token: jwt.sign(payload, 'linkstats', { expiresIn: '600000' })
+        token: jwt.sign(
+            payload,
+            'linkstats',
+            config.isDev ? null : { expiresIn: '600000' })
       }
     } else
       throw new ForbiddenError(messages.ERR_LOGIN_DISMATCH)
