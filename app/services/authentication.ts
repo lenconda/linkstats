@@ -23,7 +23,7 @@ export default class AuthenticationService {
         name: result.name
       }
       return {
-        token: jwt.sign(payload, 'linkstats', { expiresIn: '1day' })
+        token: jwt.sign(payload, 'linkstats', { expiresIn: '600000' })
       }
     } else
       throw new ForbiddenError(messages.ERR_LOGIN_DISMATCH)
@@ -39,7 +39,7 @@ export default class AuthenticationService {
       const activeCode = new Buffer(uuidv4()).toString('base64')
       try {
         await UserModel.insertMany([{
-          uuid, email, password, name, joinTime, activeCode
+          uuid, email, password: md5(password), name, joinTime, activeCode
         }])
         sendMail(0, activeCode, name, email, uuid)
         return messages.MSG_REGISTER_SUCCESS
