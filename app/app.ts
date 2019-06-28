@@ -37,8 +37,8 @@ useKoaServer(app, {
   routePrefix: '/api',
   controllers: [__dirname + '/controllers/*.{ts,js}'],
   middlewares: [__dirname + '/middlewares/*.{ts,js}'],
-  authorizationChecker: async (action: Action) => validateToken(action.request.headers['authorization'].substring(7)),
-  currentUserChecker: async (action: Action) => getUserIDByToken(action.request.headers['authorization'].substring(7)).id,
+  authorizationChecker: async (action: Action) => validateToken(action.request.headers['authorization']),
+  currentUserChecker: async (action: Action) => getUserIDByToken(action.request.headers['authorization']).id,
   defaults: {
     paramOptions: { required: false }
   },

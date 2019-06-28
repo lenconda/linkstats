@@ -1,29 +1,40 @@
 import jwt from 'jsonwebtoken'
 import config from '../../config'
+import { UnauthorizedError } from 'routing-controllers'
 
 export const generateToken = (payload: any): string => {
-  return jwt.sign(
-      payload,
-      'linkstats',
-      config.isDev ? null : { expiresIn: '600000' })
-}
-
-export const regenerateToken = (token: string): string => {
-  const payload = jwt.verify(token, 'linkstats')
-  return generateToken(payload)
-}
-
-export const getUserIDByToken = (token: string): any => {
   try {
-    const decoded = jwt.verify(token, 'linkstats')
-    return decoded
+    return jwt.sign(
+        payload,
+        'linkstats',
+        config.isDev ? null : { expiresIn: '600000' })
   } catch (e) {
     throw e
   }
 }
 
-export const validateToken = (token: string): boolean => {
+export const regenerateToken = (token: string): string => {
   try {
+    const payload = jwt.verify(token, 'linkstats')
+    return generateToken(payload)
+  } catch (e) {
+    throw e
+  }
+}
+
+export const getUserIDByToken = (raw: string): any => {
+  try {
+    const token = raw.substring(7) || ''
+    const decoded = jwt.verify(token, 'linkstats')
+    return decoded
+  } catch (e) {
+    throw new UnauthorizedError(e.message)
+  }
+}
+
+export const validateToken = (raw: string): boolean => {
+  try {
+    const token = raw.substring(7) || ''
     jwt.verify(token, 'linkstats')
     return true
   } catch (e) {
