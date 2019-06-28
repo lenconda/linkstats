@@ -13,13 +13,13 @@ const ipLocationSchema = new mongoose.Schema({
 const versionNameSchema = new mongoose.Schema({
   name: { type: String, default: '' },
   version: { type: String, default: '' }
-}, { versionKey: false, _id: false })
+})
 
 const deviceSchema = new mongoose.Schema({
   type: { type: String, default: '' },
   manufacturer: { type: String, default: '' },
   model: { type: String, default: '' }
-}, { versionKey: false, _id: false })
+})
 
 const schema = new mongoose.Schema({
   uuid: { type: String, index: true, required: true, unique: true },
@@ -35,7 +35,7 @@ const schema = new mongoose.Schema({
   os: versionNameSchema,
   device: deviceSchema,
   createTime: Number
-}, { versionKey: false, _id: false })
+})
 
 export const RecordModel =
     mongoose.model<RecordMongo>('records', schema, 'records')
