@@ -1,7 +1,6 @@
 import { Service } from 'typedi'
 import { UserModel } from '../database/models/user'
 import md5 from 'md5'
-// import jwt from 'jsonwebtoken'
 import * as messages from '../../messages'
 import {
   ForbiddenError,
@@ -11,7 +10,6 @@ import {
 import { generateUuid } from '../util/uuid'
 import uuidv4 from 'uuid/v4'
 import { sendMail } from '../util/mail'
-// import config from '../../config'
 import { generateToken } from '../util/authorization'
 
 @Service()
@@ -19,6 +17,8 @@ export default class AuthenticationService {
   async login(email: string, password: string) {
     const result = await UserModel.findOne({ email, password: md5(password) })
     if (result) {
+      if (!!result.activeCode)
+        throw new ForbiddenError(messages.ERR_LOGIN_BANNED)
       const payload = {
         id: result.uuid,
         email: result.email,
