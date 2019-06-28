@@ -18,7 +18,8 @@ const config = {
   smtpHost: process.env.SMTP_HOST,
   smtpPort: parseInt(process.env.SMTP_PORT),
   smtpUser: process.env.SMTP_USER,
-  smtpToken: process.env.SMTP_PASSWORD
+  smtpToken: process.env.SMTP_PASSWORD,
+  recordPrefix: 'https://linkstats.cc/api/record/'
 }
 
 export default config

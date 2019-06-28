@@ -1,17 +1,13 @@
 import { Service } from 'typedi'
 import { LinkModel } from '../database/models/link'
 import { RecordModel } from '../database/models/record'
-import * as messages from '../../messages'
-import {
-  InternalServerError
-} from 'routing-controllers'
 import { generateUuid } from '../util/uuid'
 import { Context } from 'koa'
 import uaDevice from 'ua-device'
 import { getGeoInfo } from '../util/ip_helper'
 
 @Service()
-export default class RecordsService {
+export default class RedirectService {
   async record(belongs: string, context: Context) {
     const uuid = generateUuid()
     const { originalUrl } = await LinkModel.findOne({ uuid: belongs })
@@ -60,6 +56,6 @@ export default class RecordsService {
         createTime: Date.parse(new Date().toString())
       }
     ])
-    return originalUrl
+    return { href: originalUrl }
   }
 }

@@ -1,22 +1,16 @@
 import {
   JsonController,
-  Authorized,
-  Put,
   Param,
   Get,
-  CurrentUser,
-  QueryParam,
-  BodyParam,
-  Delete,
   Ctx
 } from 'routing-controllers'
-import RecordsService from '../services/records'
+import RedirectService from '../services/redirect'
 import { Inject } from 'typedi'
 
 @JsonController('/redirect')
 export default class RecordsController {
   @Inject()
-  service: RecordsService
+  service: RedirectService
 
   @Get('/:id')
   async record(@Param('id') belongs: string,

@@ -7,6 +7,7 @@ import {
 import { LinkMongo } from '../interfaces'
 import { generateShortURL } from '../util/short_url'
 import { generateUuid } from '../util/uuid'
+import config from '../../config'
 
 @Service()
 export default class LinksService {
@@ -44,7 +45,7 @@ export default class LinksService {
   async createNewLink(id: string, url: string) {
     try {
       const uuid = await generateUuid()
-      const redirectUrl = `https://linkstats.cc/api/redirect/${uuid}`
+      const redirectUrl = `${config.recordPrefix}${uuid}`
       const shorternUrl = await generateShortURL(redirectUrl)
       const qrCode = `http://qr.topscan.com/api.php?&w=200&text=${encodeURI(shorternUrl)}`
       const createTime = Date.parse(new Date().toString())
