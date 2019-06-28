@@ -34,21 +34,13 @@ interface DeviceInfo {
   model: string
 }
 
-interface IPLocation {
-  as: string
-  city: string
+export interface IPLocation {
   country: string
   countryCode: string
-  isp: string
-  lat: string
-  lon: string
-  org: string
-  query: string
   region: string
-  regionName: string
-  status: string
-  timezone: string
-  zip: string
+  city: string
+  latitude: string
+  longitude: string
 }
 
 export interface Record {

@@ -11,6 +11,7 @@ export const ERR_CHANGE_PASSWD = '更新密码失败'
 export const ERR_CHANGE_PASSWD_DISMATCH_OLD = '旧密码错误'
 export const ERR_CREATE_LINK = '创建链接失败'
 export const ERR_DELETE_LINK = '删除链接失败'
+export const ERR_HANDLE_LINK = '解析链接失败'
 
 export const MSG_REGISTER_SUCCESS = '注册成功，请前往邮箱激活账户'
 export const MSG_ACTIVE_SUCCESS = '账户已被激活'

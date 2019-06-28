@@ -19,6 +19,7 @@
     "@types/btoa": "^1.2.3",
     "@types/chai": "^4.1.2",
     "@types/chai-http": "^3.0.4",
+    "@types/cheerio": "^0.22.11",
     "@types/dotenv": "^6.1.1",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/kcors": "^2.2.2",
@@ -40,7 +41,9 @@
   "dependencies": {
     "axios": "^0.19.0",
     "btoa": "^1.2.1",
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.0.0",
+    "iplocation": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "kcors": "^2.2.1",
     "koa": "^2.4.1",
@@ -56,6 +59,7 @@
     "reflect-metadata": "^0.1.12",
     "routing-controllers": "^0.7.7",
     "typedi": "^0.7.2",
+    "ua-device": "^0.1.10",
     "uuid": "^3.3.2"
   }
 }

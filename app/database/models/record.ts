@@ -1,49 +1,40 @@
 import mongoose from 'mongoose'
 import { RecordMongo } from '../../interfaces'
 
+const ipLocationSchema = new mongoose.Schema({
+  country: String,
+  countryCode: String,
+  latitude: String,
+  longitude: String,
+  region: String,
+  city: String
+})
+
+const versionNameSchema = new mongoose.Schema({
+  name: { type: String, default: '' },
+  version: { type: String, default: '' }
+})
+
+const deviceSchema = new mongoose.Schema({
+  type: { type: String, default: '' },
+  manufacturer: { type: String, default: '' },
+  model: { type: String, default: '' }
+})
+
 const schema = new mongoose.Schema({
   uuid: { type: String, index: true, required: true, unique: true },
   belongs: { type: String, required: true },
-  time: Number,
   ip: String,
-  ipLocation: {
-    as: String,
-    city: String,
-    country: String,
-    countryCode: String,
-    isp: String,
-    lat: String,
-    lon: String,
-    org: String,
-    query: String,
-    region: String,
-    regionName: String,
-    status: String,
-    timezone: String,
-    zip: String
-  },
+  ipLocation: ipLocationSchema,
   remoteAddr: String,
   httpVia: String,
   httpXForwardFor: String,
   userAgent: String,
-  browser: {
-    name: String,
-    version: String
-  },
-  engine: {
-    name: String,
-    version: String
-  },
-  os: {
-    name: String,
-    version: String
-  },
-  device: {
-    type: String,
-    manufacturer: String,
-    model: String
-  },
-  createTime: { type: Number, default: Date.parse(new Date().toString()) }
+  browser: versionNameSchema,
+  engine: versionNameSchema,
+  os: versionNameSchema,
+  device: deviceSchema,
+  createTime: Number
 })
 
 export const RecordModel =

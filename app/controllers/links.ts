@@ -1,7 +1,7 @@
 import {
   JsonController,
   Authorized,
-  Put,
+  Post,
   Get,
   CurrentUser,
   QueryParam,
@@ -25,7 +25,7 @@ export default class LinksController {
   }
 
   @Authorized()
-  @Put('')
+  @Post('')
   async createNewLink(@CurrentUser() id: string,
                       @BodyParam('url') url: string) {
     return await this.service.createNewLink(id, url)

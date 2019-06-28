@@ -6,7 +6,8 @@ import { regenerateToken } from '../util/authorization'
 export class ResponseHandler implements KoaMiddlewareInterface {
 
   async use (ctx: IRouterContext, next: (err?: any) => Promise<any>) {
-    const token = ctx.req.headers['authorization'].substring(7)
+    const token = ctx.req.headers['authorization'] ?
+        ctx.req.headers['authorization'].substring(7) : ''
     ctx.body = {
       message: 'OK',
       token: (token && !/.*\/auth\/.*/g.test(ctx.path)) ? regenerateToken(token) : '',
