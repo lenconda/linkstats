@@ -1,14 +1,16 @@
 import {
   JsonController,
-  Param,
   Get,
+  Param,
   Authorized,
   CurrentUser,
   QueryParam,
-  Delete
+  Delete,
+  Ctx
 } from 'routing-controllers'
 import RecordsService from '../services/records'
 import { Inject } from 'typedi'
+import { Context } from 'koa'
 
 @JsonController('/record')
 export default class RecordsController {
@@ -25,7 +27,7 @@ export default class RecordsController {
   }
 
   @Authorized()
-  @Get('/:uuid')
+  @Get('/detail/:uuid')
   async getRecordInfo(@CurrentUser() userId: string,
                       @Param('uuid') uuid: string) {
     return await this.service.getRecordInfo(userId, uuid)
@@ -36,5 +38,13 @@ export default class RecordsController {
   async deleteRecord(@CurrentUser() userId: string,
                      @Param('uuid') uuid: string) {
     return await this.service.deleteRecord(userId, uuid)
+  }
+
+  @Authorized()
+  @Get('/export')
+  async export(@CurrentUser() userId: string,
+               @Ctx() context: Context,
+               @QueryParam('link') link: string = '') {
+    return await this.service.export(userId, context, link)
   }
 }
