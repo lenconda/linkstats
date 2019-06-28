@@ -19,7 +19,10 @@ const config = {
   smtpPort: parseInt(process.env.SMTP_PORT),
   smtpUser: process.env.SMTP_USER,
   smtpToken: process.env.SMTP_PASSWORD,
-  recordPrefix: 'https://linkstats.cc/api/redirect/'
+  recordPrefix: 'https://linkstats.cc/#/redirect',
+  activePrefix: 'https://linkstats.cc/#/active',
+  resetPrefix: 'https://linkstats.cc/#/reset',
+  productName: 'LinkStats',
 }
 
 export default config

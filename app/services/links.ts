@@ -45,7 +45,7 @@ export default class LinksService {
   async createNewLink(id: string, url: string) {
     try {
       const uuid = await generateUuid()
-      const redirectUrl = `${config.recordPrefix}${uuid}`
+      const redirectUrl = `${config.recordPrefix}?to=${uuid}`
       const shorternUrl = await generateShortURL(redirectUrl)
       const qrCode = `http://qr.topscan.com/api.php?&w=200&text=${encodeURI(shorternUrl)}`
       const createTime = Date.parse(new Date().toString())
