@@ -23,21 +23,21 @@ export default class RedirectService {
     const ipInfo = await getGeoInfo(ip)
     const deviceInfo = new uaDevice(userAgent)
     const browser = {
-      name: deviceInfo.browser.name,
-      version: deviceInfo.browser.version.original
+      name: deviceInfo.browser.name ? deviceInfo.browser.name : '',
+      version: deviceInfo.browser.version ? deviceInfo.browser.version.original : ''
     }
     const engine = {
-      name: deviceInfo.engine.name,
-      version: deviceInfo.engine.version.original
+      name: deviceInfo.engine.name ? deviceInfo.engine.name : '',
+      version: deviceInfo.engine.version ? deviceInfo.engine.version.original : ''
     }
     const os = {
-      name: deviceInfo.os.name,
-      version: deviceInfo.os.version.original
+      name: deviceInfo.os.name ? deviceInfo.os.name : '',
+      version: deviceInfo.os.version ? deviceInfo.os.version.original : ''
     }
     const device = {
-      type: deviceInfo.device.type,
-      manufacturer: deviceInfo.device.manufacturer,
-      model: deviceInfo.device.model
+      type: deviceInfo.device.type ? deviceInfo.device.type : '',
+      manufacturer: deviceInfo.device.manufacturer ? deviceInfo.device.manufacturer : '',
+      model: deviceInfo.device.model ? deviceInfo.device.model : ''
     }
     await RecordModel.insertMany([
       {
