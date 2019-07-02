@@ -64,13 +64,10 @@ export default class LinksService {
   }
 
   async deleteLinks(id: string, links: string[]) {
-    try {
-      await LinkModel.deleteMany({
-        uuid: { $in: links }
-      })
-      return messages.MSG_DELETE_LINK_SUCCESS
-    } catch (e) {
-      throw new InternalServerError(messages.ERR_DELETE_LINK)
-    }
+    await LinkModel.deleteMany({
+      uuid: { $in: links },
+      belongs: id
+    })
+    return messages.MSG_DELETE_LINK_SUCCESS
   }
 }

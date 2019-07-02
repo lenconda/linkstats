@@ -5,6 +5,7 @@ import {
   Authorized,
   CurrentUser,
   QueryParam,
+  BodyParam,
   Delete,
   Ctx
 } from 'routing-controllers'
@@ -34,10 +35,10 @@ export default class RecordsController {
   }
 
   @Authorized()
-  @Delete('/:uuid')
+  @Delete('')
   async deleteRecord(@CurrentUser() userId: string,
-                     @Param('uuid') uuid: string) {
-    return await this.service.deleteRecord(userId, uuid)
+                     @BodyParam('records') records: string[]) {
+    return await this.service.deleteRecords(userId, records)
   }
 
   @Authorized()

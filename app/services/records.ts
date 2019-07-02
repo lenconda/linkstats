@@ -41,41 +41,43 @@ export default class RecordsService {
   }
 
   async getRecordInfo(userId: string, uuid: string) {
-    try {
-      const record = await RecordModel.findOne({ uuid })
-      if (!record)
-        throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
-      const link = await LinkModel.findOne({ uuid: record.belongs })
-      if (link.belongs !== userId)
-        throw new ForbiddenError(messages.ERR_UNAUTHORIZED_RECORD)
-      return record
-    } catch (e) {
-      throw new InternalServerError(e.message)
-    }
+    const record = await RecordModel.findOne({ uuid })
+    if (!record)
+      throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
+    const link = await LinkModel.findOne({ uuid: record.belongs })
+    if (link.belongs !== userId)
+      throw new ForbiddenError(messages.ERR_UNAUTHORIZED_RECORD)
+    return record
   }
 
-  async deleteRecord(userId: string, uuid: string) {
-    try {
-      const record = await RecordModel.findOne({ uuid })
-      if (!record)
+  async deleteRecords(userId: string, records: string[]) {
+    for (let item of records) {
+      const record = await RecordModel.findOne({ uuid: item })
+      if (!record) {
         throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
+        return
+      }
       const link = await LinkModel.findOne({ uuid: record.belongs })
-      if (link.belongs !== userId)
+      if (link.belongs !== userId) {
         throw new ForbiddenError(messages.ERR_UNAUTHORIZED_RECORD)
-      await RecordModel.deleteOne({ uuid })
-      return messages.MSG_DELETE_RECORD_SUCCESS
-    } catch (e) {
-      throw new InternalServerError(e.message)
+        return
+      }
     }
+    await RecordModel.deleteMany({
+      uuid: {
+        $in: records
+      }
+    })
+    return messages.MSG_DELETE_RECORD_SUCCESS
   }
 
   async export(userId: string, context: Context, link: string) {
-    try {
-      const linksData: LinkMongo[] =
-          await LinkModel.find({ belongs: userId })
-      const links = linksData.map((value, index) => value.uuid)
-      const data: RecordMongo[] =
-          await RecordModel.find({ belongs: { $in: link ? link : links }})
+    const linksData: LinkMongo[] =
+        await LinkModel.find({ belongs: userId })
+    const links = linksData.map((value, index) => value.uuid)
+    const data: RecordMongo[] =
+        await RecordModel.find({ belongs: { $in: link ? link : links }})
+    if (data) {
       const items = data.map((value, index) => {
         return {
           uuid: value.uuid,
@@ -110,8 +112,7 @@ export default class RecordsService {
       ]
       const csv = json2csv.parse(items, fields)
       return { text: csv }
-    } catch (e) {
-      throw new InternalServerError(e.message)
-    }
+    } else
+      throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
   }
 }
