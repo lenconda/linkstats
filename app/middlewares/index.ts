@@ -4,7 +4,7 @@ import { regenerateToken } from '../util/authorization'
 
 @Middleware({ type: 'after' })
 export class ResponseHandler implements KoaMiddlewareInterface {
-  async use (ctx: IRouterContext, next: (err?: any) => Promise<any>) {
+  async use(ctx: IRouterContext, next: (err?: any) => Promise<any>): Promise<void> {
     const token = ctx.req.headers['authorization'] ?
         ctx.req.headers['authorization'].substring(7) : ''
 
@@ -12,7 +12,7 @@ export class ResponseHandler implements KoaMiddlewareInterface {
       message: 'OK',
       token: (token && !/.*\/auth\/.*/g.test(ctx.path)) ? regenerateToken(token) : '',
       status: 200,
-      data: !!ctx.body ? ctx.body : {}
+      data: !!ctx.body ? ctx.body : {},
     }
 
     ctx.status = 200

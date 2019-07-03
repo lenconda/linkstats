@@ -4,7 +4,7 @@ import { RecordModel } from '../database/models/record'
 import {
   ForbiddenError,
   InternalServerError,
-  NotFoundError
+  NotFoundError,
 } from 'routing-controllers'
 import { LinkMongo, RecordMongo } from '../interfaces'
 import * as messages from '../../messages'
@@ -13,7 +13,7 @@ import { Context } from 'koa'
 
 @Service()
 export default class RecordsService {
-  async getAllRecords(uuid: string, size: number, page: number, link: string) {
+  async getAllRecords(uuid: string, size: number, page: number, link: string): Promise<any> {
     try {
       const linksData: LinkMongo[] =
           await LinkModel.find({ belongs: uuid })
@@ -29,7 +29,7 @@ export default class RecordsService {
           ip: value.ip,
           country: value.ipLocation.country,
           device: value.device.type,
-          createTime: value.createTime
+          createTime: value.createTime,
         }
       })
       const count =
@@ -40,7 +40,7 @@ export default class RecordsService {
     }
   }
 
-  async getRecordInfo(userId: string, uuid: string) {
+  async getRecordInfo(userId: string, uuid: string): Promise<any> {
     const record = await RecordModel.findOne({ uuid })
     if (!record)
       throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
@@ -50,8 +50,8 @@ export default class RecordsService {
     return record
   }
 
-  async deleteRecords(userId: string, records: string[]) {
-    for (let item of records) {
+  async deleteRecords(userId: string, records: string[]): Promise<any> {
+    for (const item of records) {
       const record = await RecordModel.findOne({ uuid: item })
       if (!record) {
         throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
@@ -65,13 +65,13 @@ export default class RecordsService {
     }
     await RecordModel.deleteMany({
       uuid: {
-        $in: records
-      }
+        $in: records,
+      },
     })
     return messages.MSG_DELETE_RECORD_SUCCESS
   }
 
-  async export(userId: string, context: Context, link: string) {
+  async export(userId: string, context: Context, link: string): Promise<any> {
     const linksData: LinkMongo[] =
         await LinkModel.find({ belongs: userId })
     const links = linksData.map((value, index) => value.uuid)
@@ -92,7 +92,7 @@ export default class RecordsService {
           browserVersion: value.browser.version,
           os: value.os.name,
           osVersion: value.os.version,
-          createTime: new Date(value.createTime).toUTCString()
+          createTime: new Date(value.createTime).toUTCString(),
         }
       })
       const fields = [
@@ -108,7 +108,7 @@ export default class RecordsService {
         'browserVersion',
         'os',
         'osVersion',
-        'createTime'
+        'createTime',
       ]
       const csv = json2csv.parse(items, fields)
       return { text: csv }

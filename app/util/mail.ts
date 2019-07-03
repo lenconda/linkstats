@@ -14,16 +14,16 @@ export const sendMail = (
     port: config.smtpPort,
     auth: {
       user: config.smtpUser,
-      pass: config.smtpToken
-    }
+      pass: config.smtpToken,
+    },
   })
 
-  let registerMailOptions = {
+  const registerMailOptions = {
     from: 'no-reply@lenconda.top',
     to: email,
     subject: `【LinkStats】${type === 0 ? '验证你的邮箱地址' : '修改你的账户的密码'}`,
     html: type === 0 ? renderRegisterHtml(activeCode, username, email, uuid) :
-        renderResetHtml(activeCode, username, email, uuid, time)
+        renderResetHtml(activeCode, username, email, uuid, time),
   }
 
   transport.sendMail(registerMailOptions, (err, info) => {

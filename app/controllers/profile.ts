@@ -4,7 +4,7 @@ import {
   Post,
   Get,
   CurrentUser,
-  Body
+  Body,
 } from 'routing-controllers'
 import ProfileService from '../services/profile'
 import { Inject } from 'typedi'
@@ -16,19 +16,21 @@ export default class ProfileController {
 
   @Authorized()
   @Get('/info')
-  async info(@CurrentUser() id) {
+  async info(@CurrentUser() id: string): Promise<any> {
     return await this.service.getUserInfo(id)
   }
 
   @Authorized()
   @Post('/update')
-  async updateProfile(@CurrentUser() id, @Body() profile) {
+  async updateProfile(@CurrentUser() id: string, 
+                      @Body() profile: any): Promise<any> {
     return await this.service.updateProfile(id, profile)
   }
 
   @Authorized()
   @Post('/change_password')
-  async changePassword(@CurrentUser() id, @Body() update) {
+  async changePassword(@CurrentUser() id: string, 
+                       @Body() update: any): Promise<any> {
     return await this.service.changePassword(id, update)
   }
 }

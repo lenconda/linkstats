@@ -2,7 +2,8 @@ import { Service } from 'typedi'
 import { LinkModel } from '../database/models/link'
 import * as messages from '../../messages'
 import {
-  InternalServerError, NotFoundError
+  InternalServerError, 
+  NotFoundError,
 } from 'routing-controllers'
 import { LinkMongo } from '../interfaces'
 import { generateShortURL } from '../util/short_url'
@@ -11,7 +12,7 @@ import config from '../../config'
 
 @Service()
 export default class LinksService {
-  async getAllLinks(userId: string, size: number, page: number) {
+  async getAllLinks(userId: string, size: number, page: number): Promise<any> {
     try {
       const data: LinkMongo[] = await LinkModel
           .find({ belongs: userId })
@@ -25,7 +26,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
-          qrCode
+          qrCode,
         } = value
         return {
           uuid,
@@ -33,7 +34,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
-          qrCode
+          qrCode,
         }
       })
       return { items, count }
@@ -42,7 +43,7 @@ export default class LinksService {
     }
   }
 
-  async getLinkInfo(userId: string, uuid: string) {
+  async getLinkInfo(userId: string, uuid: string): Promise<any> {
     const data = await LinkModel
         .findOne({ uuid, belongs: userId })
     if (!data) {
@@ -53,17 +54,17 @@ export default class LinksService {
       createTime,
       originalUrl,
       shorternUrl,
-      qrCode
+      qrCode,
     } = data
     return {
       createTime,
       originalUrl,
       shorternUrl,
-      qrCode
+      qrCode,
     }
   }
 
-  async createNewLink(id: string, url: string) {
+  async createNewLink(id: string, url: string): Promise<any> {
     try {
       const uuid = await generateUuid()
       const redirectUrl = `${config.recordPrefix}?to=${uuid}`
@@ -76,7 +77,7 @@ export default class LinksService {
         originalUrl: url,
         shorternUrl,
         qrCode,
-        createTime
+        createTime,
       }])
       return messages.MSG_CREATE_LINK_SUCCESS
     } catch (e) {
@@ -84,10 +85,10 @@ export default class LinksService {
     }
   }
 
-  async deleteLinks(id: string, links: string[]) {
+  async deleteLinks(id: string, links: string[]): Promise<any> {
     await LinkModel.deleteMany({
       uuid: { $in: links },
-      belongs: id
+      belongs: id,
     })
     return messages.MSG_DELETE_LINK_SUCCESS
   }

@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   joinTime: { type: Number, default: Date.parse(new Date().toString()) },
-  activeCode: { type: String, required: false }
+  activeCode: { type: String, required: false },
 })
 
 export const UserModel =

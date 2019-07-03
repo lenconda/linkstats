@@ -6,7 +6,8 @@ import {
   CurrentUser,
   QueryParam,
   BodyParam,
-  Delete, Param
+  Delete, 
+  Param,
 } from 'routing-controllers'
 import LinksService from '../services/links'
 import { Inject } from 'typedi'
@@ -20,28 +21,28 @@ export default class LinksController {
   @Get('')
   async getAllLinks(@CurrentUser() userId: string,
                     @QueryParam('size') size: string = '10',
-                    @QueryParam('page') page: string = '1') {
+                    @QueryParam('page') page: string = '1'): Promise<any> {
     return await this.service.getAllLinks(userId, parseInt(size), parseInt(page))
   }
 
   @Authorized()
   @Get('/:uuid')
   async getLinkInfo(@CurrentUser() userId: string,
-                    @Param('uuid') uuid: string) {
+                    @Param('uuid') uuid: string): Promise<any> {
     return await this.service.getLinkInfo(userId, uuid)
   }
 
   @Authorized()
   @Post('')
   async createNewLink(@CurrentUser() id: string,
-                      @BodyParam('url') url: string) {
+                      @BodyParam('url') url: string): Promise<any> {
     return await this.service.createNewLink(id, url)
   }
 
   @Authorized()
   @Delete('')
   async deleteLinks(@CurrentUser() id: string,
-                    @BodyParam('links') links: string[]) {
+                    @BodyParam('links') links: string[]): Promise<any> {
     return await this.service.deleteLinks(id, links)
   }
 }

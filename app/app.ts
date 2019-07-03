@@ -17,7 +17,7 @@ app.use(async(ctx, next): Promise<any> => {
     ctx.body = {
       status: ctx.status || 403,
       message: e.message,
-      data: e.errors ? e.errors : {}
+      data: e.errors ? e.errors : {},
     }
   }
 })
@@ -30,7 +30,7 @@ app.use(bodyParser())
 
 if (config.isDev) app.use(logger())
 
-let port: number = process.env.PORT ? parseInt(process.env.PORT) : 6217
+const port: number = process.env.PORT ? parseInt(process.env.PORT) : 6217
 
 useContainer(Container)
 useKoaServer(app, {
@@ -40,7 +40,7 @@ useKoaServer(app, {
   authorizationChecker: async (action: Action) => validateToken(action.request.headers['authorization']),
   currentUserChecker: async (action: Action) => getUserIDByToken(action.request.headers['authorization']).id,
   defaults: {
-    paramOptions: { required: false }
+    paramOptions: { required: false },
   },
   defaultErrorHandler: false,
   classTransformer: false,

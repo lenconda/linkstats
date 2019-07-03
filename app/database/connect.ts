@@ -2,7 +2,11 @@ import mongoose from 'mongoose'
 import config from '../../config'
 
 const {
-  dbName, dbPort, dbHost, dbToken, dbUser
+  dbName, 
+  dbPort, 
+  dbHost, 
+  dbToken, 
+  dbUser,
 } = config
 
 export const connect = () => {

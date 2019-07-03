@@ -7,7 +7,7 @@ import {
   QueryParam,
   BodyParam,
   Delete,
-  Ctx
+  Ctx,
 } from 'routing-controllers'
 import RecordsService from '../services/records'
 import { Inject } from 'typedi'
@@ -23,21 +23,21 @@ export default class RecordsController {
   async getAllRecords(@CurrentUser() uuid: string,
                       @QueryParam('size') size: string = '10',
                       @QueryParam('page') page: string = '1',
-                      @QueryParam('link') link: string = '') {
+                      @QueryParam('link') link: string = ''): Promise<any> {
     return await this.service.getAllRecords(uuid, parseInt(size), parseInt(page), link)
   }
 
   @Authorized()
   @Get('/detail/:uuid')
   async getRecordInfo(@CurrentUser() userId: string,
-                      @Param('uuid') uuid: string) {
+                      @Param('uuid') uuid: string): Promise<any> {
     return await this.service.getRecordInfo(userId, uuid)
   }
 
   @Authorized()
   @Delete('')
   async deleteRecord(@CurrentUser() userId: string,
-                     @BodyParam('records') records: string[]) {
+                     @BodyParam('records') records: string[]): Promise<any> {
     return await this.service.deleteRecords(userId, records)
   }
 
@@ -45,7 +45,7 @@ export default class RecordsController {
   @Get('/export')
   async export(@CurrentUser() userId: string,
                @Ctx() context: Context,
-               @QueryParam('link') link: string = '') {
+               @QueryParam('link') link: string = ''): Promise<any> {
     return await this.service.export(userId, context, link)
   }
 }

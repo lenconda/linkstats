@@ -5,7 +5,7 @@ import * as messages from '../../messages'
 import {
   ForbiddenError,
   InternalServerError,
-  NotFoundError
+  NotFoundError,
 } from 'routing-controllers'
 import { generateUuid } from '../util/uuid'
 import uuidv4 from 'uuid/v4'
@@ -14,7 +14,7 @@ import { generateToken } from '../util/authorization'
 
 @Service()
 export default class AuthenticationService {
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<any> {
     const result = await UserModel.findOne({ email, password: md5(password) })
     if (result) {
       if (!!result.activeCode)
@@ -22,16 +22,16 @@ export default class AuthenticationService {
       const payload = {
         id: result.uuid,
         email: result.email,
-        name: result.name
+        name: result.name,
       }
       return {
-        token: generateToken(payload)
+        token: generateToken(payload),
       }
     } else
       throw new ForbiddenError(messages.ERR_LOGIN_DISMATCH)
   }
 
-  async register(email: string, password: string, name: string) {
+  async register(email: string, password: string, name: string): Promise<any> {
     const result = await UserModel.findOne({ email })
     if (result)
       throw new ForbiddenError(messages.ERR_DUPLICATE_EMAIL)
@@ -41,7 +41,7 @@ export default class AuthenticationService {
       const activeCode = new Buffer(uuidv4()).toString('base64')
       try {
         await UserModel.insertMany([{
-          uuid, email, password: md5(password), name, joinTime, activeCode
+          uuid, email, password: md5(password), name, joinTime, activeCode,
         }])
         sendMail(0, activeCode, name, email, uuid)
         return messages.MSG_REGISTER_SUCCESS
@@ -51,7 +51,7 @@ export default class AuthenticationService {
     }
   }
 
-  async active(uuid: string, code: string) {
+  async active(uuid: string, code: string): Promise<any> {
     const result = await UserModel.findOne({ uuid, activeCode: code })
     if (result) {
       await UserModel.updateOne({ uuid, activeCode: code }, { activeCode: '' })
@@ -60,7 +60,7 @@ export default class AuthenticationService {
       throw new ForbiddenError(messages.ERR_ACTIVE_FAILED)
   }
 
-  async forgot(email: string) {
+  async forgot(email: string): Promise<any> {
     const result = await UserModel.findOne({ email, activeCode: '' })
     if (!result)
       throw new NotFoundError(messages.ERR_USER_NOTFOUND)
@@ -76,7 +76,7 @@ export default class AuthenticationService {
     }
   }
 
-  async reset(uuid: string, code: string, password: string) {
+  async reset(uuid: string, code: string, password: string): Promise<any> {
     const result = await UserModel.findOne({ uuid, activeCode: code })
     if (!result)
       throw new ForbiddenError(messages.ERR_RESET_LINK_DISMATCH)

@@ -19,7 +19,7 @@ export const getGeoInfo = async (ip: string, timeout: number = 15000): Promise<I
       region: items[2],
       city: items[3],
       latitude: items[6],
-      longitude: items[7]
+      longitude: items[7],
     }
   } catch (e) {
     return {
@@ -28,7 +28,7 @@ export const getGeoInfo = async (ip: string, timeout: number = 15000): Promise<I
       region: '',
       city: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
     }
   }
 }

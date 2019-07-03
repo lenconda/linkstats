@@ -7,18 +7,18 @@ const ipLocationSchema = new mongoose.Schema({
   latitude: String,
   longitude: String,
   region: String,
-  city: String
+  city: String,
 })
 
 const versionNameSchema = new mongoose.Schema({
   name: { type: String, default: '' },
-  version: { type: String, default: '' }
+  version: { type: String, default: '' },
 })
 
 const deviceSchema = new mongoose.Schema({
   type: { type: String, default: '' },
   manufacturer: { type: String, default: '' },
-  model: { type: String, default: '' }
+  model: { type: String, default: '' },
 })
 
 const schema = new mongoose.Schema({
@@ -34,7 +34,7 @@ const schema = new mongoose.Schema({
   engine: versionNameSchema,
   os: versionNameSchema,
   device: deviceSchema,
-  createTime: Number
+  createTime: Number,
 })
 
 export const RecordModel =

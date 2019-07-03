@@ -2,10 +2,11 @@ import {
   JsonController,
   Param,
   Get,
-  Ctx
+  Ctx,
 } from 'routing-controllers'
 import RedirectService from '../services/redirect'
 import { Inject } from 'typedi'
+import { Context } from 'koa'
 
 @JsonController('/redirect')
 export default class RecordsController {
@@ -14,7 +15,7 @@ export default class RecordsController {
 
   @Get('/:id')
   async record(@Param('id') belongs: string,
-               @Ctx() context) {
+               @Ctx() context: Context): Promise<any> {
     return await this.service.record(belongs, context)
   }
 }
