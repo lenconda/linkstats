@@ -7,6 +7,11 @@ const schema = new mongoose.Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   joinTime: { type: Number, default: Date.parse(new Date().toString()) },
+  zipCode: { type: String, default: '', required: false },
+  address: { type: String, default: '', required: false },
+  city: { type: String, default: '', required: false },
+  region: { type: String, default: '', required: false },
+  country: { type: String, default: '', required: false },
   activeCode: { type: String, required: false },
 })
 
