@@ -6,7 +6,7 @@ import {
   CurrentUser,
   QueryParam,
   BodyParam,
-  Delete
+  Delete, Param
 } from 'routing-controllers'
 import LinksService from '../services/links'
 import { Inject } from 'typedi'
@@ -22,6 +22,13 @@ export default class LinksController {
                     @QueryParam('size') size: string = '10',
                     @QueryParam('page') page: string = '1') {
     return await this.service.getAllLinks(userId, parseInt(size), parseInt(page))
+  }
+
+  @Authorized()
+  @Get('/:uuid')
+  async getLinkInfo(@CurrentUser() userId: string,
+                    @Param('uuid') uuid: string) {
+    return await this.service.getLinkInfo(userId, uuid)
   }
 
   @Authorized()

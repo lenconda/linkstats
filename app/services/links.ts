@@ -2,7 +2,7 @@ import { Service } from 'typedi'
 import { LinkModel } from '../database/models/link'
 import * as messages from '../../messages'
 import {
-  InternalServerError
+  InternalServerError, NotFoundError
 } from 'routing-controllers'
 import { LinkMongo } from '../interfaces'
 import { generateShortURL } from '../util/short_url'
@@ -39,6 +39,27 @@ export default class LinksService {
       return { items, count }
     } catch (e) {
       throw new InternalServerError(e.message)
+    }
+  }
+
+  async getLinkInfo(userId: string, uuid: string) {
+    const data = await LinkModel
+        .findOne({ uuid, belongs: userId })
+    if (!data) {
+      throw new NotFoundError(messages.ERR_LINK_NOTFOUND)
+      return
+    }
+    const {
+      createTime,
+      originalUrl,
+      shorternUrl,
+      qrCode
+    } = data
+    return {
+      createTime,
+      originalUrl,
+      shorternUrl,
+      qrCode
     }
   }
 
