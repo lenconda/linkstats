@@ -8,7 +8,7 @@ export const renderRegisterHtml = (activeCode: string, username: string, email: 
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <title>验证你的邮箱</title>
           <meta charset="utf-8" />
-          <link rel="stylesheet" href="https://unpkg.com/antd@3.19.5/dist/antd.min.css">
+          <link rel="stylesheet" href="http://static.lenconda.top/css/antd.min.css">
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
           <style>
             body {
@@ -36,7 +36,7 @@ export const renderRegisterHtml = (activeCode: string, username: string, email: 
                 <p>如果上面的按钮无法跳转，请点击如下链接完成验证：</p>
                 <p>
                   <a href="${config.activePrefix}?user=${uuid}&code=${activeCode}">
-                    https://linkstate.lenconda.top/#/active?user=${uuid}&code=${activeCode}
+                    ${config.activePrefix}?user=${uuid}&code=${activeCode}
                   </a>
                 </p>
                 <p>
@@ -88,7 +88,7 @@ export const renderResetHtml = (activeCode: string, username: string, email: str
                 <p>如果上面的按钮无法跳转，请点击如下链接完成验证：</p>
                 <p>
                   <a href="${config.resetPrefix}?user=${uuid}&code=${activeCode}">
-                    https://linkstate.lenconda.top/#/reset?user=${uuid}&code=${activeCode}
+                    ${config.resetPrefix}?user=${uuid}&code=${activeCode}
                   </a>
                 </p>
                 <p>
