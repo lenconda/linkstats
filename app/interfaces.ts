@@ -7,6 +7,11 @@ export interface User {
   name: string
   joinTime: number
   activeCode: string
+  zipCode: string
+  address: string
+  city: string
+  region: string
+  country: string
 }
 
 export interface UserMongo extends User, Document {}

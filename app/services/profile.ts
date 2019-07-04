@@ -12,14 +12,37 @@ export interface UserInfo {
   name: string
   email: string
   joinTime: number
+  zipCode: string
+  address: string
+  city: string
+  region: string
+  country: string
 }
 
 @Service()
 export default class ProfileService {
   async getUserInfo(id: string): Promise<UserInfo> {
-    const { joinTime, name, uuid, email } = await UserModel.findOne({ uuid: id })
+    const { 
+      joinTime, 
+      name, 
+      uuid, 
+      email,
+      zipCode, 
+      address,
+      city,
+      region,
+      country,
+    } = await UserModel.findOne({ uuid: id })
     return {
-      joinTime, name, uuid, email,
+      joinTime, 
+      name, 
+      uuid, 
+      email,
+      zipCode,
+      address,
+      city,
+      region,
+      country,
     }
   }
 
