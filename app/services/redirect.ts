@@ -16,9 +16,11 @@ export default class RedirectService {
       ip = context.request.ip.substr(7)
     else
       ip = context.request.ip
-    const remoteAddr = context.request.headers['remote-addr']
-    const httpVia = context.request.headers['via']
-    const httpXForwardFor = context.request.headers['x-forwarded-for']
+    const proxy = {
+      remoteAddr: context.request.headers['remote-addr'],
+      httpVia: context.request.headers['via'],
+      httpXForwardedFor: context.request.headers['x-forwarded-for'],
+    }
     const userAgent = context.request.headers['user-agent']
     const ipInfo = await getGeoInfo(ip)
     const deviceInfo = new uaDevice(userAgent)
@@ -45,9 +47,7 @@ export default class RedirectService {
         belongs,
         ip,
         ipLocation: ipInfo,
-        remoteAddr,
-        httpVia,
-        httpXForwardFor,
+        proxy,
         userAgent,
         browser,
         engine,

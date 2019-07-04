@@ -48,14 +48,18 @@ export interface IPLocation {
   longitude: string
 }
 
+export interface ProxyInfo {
+  remoteAddr: string
+  httpVia: string
+  httpXForwardedFor: string
+}
+
 export interface Record {
   uuid: string
   belongs: string
   ip: string
   ipLocation: IPLocation
-  remoteAddr: string
-  httpVia: string
-  httpXForwardFor: string
+  proxy: ProxyInfo
   userAgent: string
   browser: UserAgentInfo
   engine: UserAgentInfo

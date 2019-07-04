@@ -21,14 +21,18 @@ const deviceSchema = new mongoose.Schema({
   model: { type: String, default: '' },
 })
 
+const proxySchema = new mongoose.Schema({
+  remoteAddr: { type: String, default: '' },
+  httpVia: { type: String, default: '' },
+  httpXForwardedFor: { type: String, default: '' },
+})
+
 const schema = new mongoose.Schema({
   uuid: { type: String, index: true, required: true, unique: true },
   belongs: { type: String, required: true },
   ip: String,
   ipLocation: ipLocationSchema,
-  remoteAddr: String,
-  httpVia: String,
-  httpXForwardFor: String,
+  proxy: proxySchema,
   userAgent: String,
   browser: versionNameSchema,
   engine: versionNameSchema,
