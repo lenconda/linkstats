@@ -5,9 +5,10 @@ import { UnauthorizedError } from 'routing-controllers'
 export const generateToken = (payload: any): string => {
   try {
     return jwt.sign(
-        payload,
-        'linkstats',
-        config.isDev ? null : { expiresIn: '600000' })
+      {
+        ...payload,
+        exp: Math.floor(Date.now() / 1000) + (60 * 10),
+      }, 'linkstats')
   } catch (e) {
     throw e
   }
