@@ -42,7 +42,7 @@ export default class HelloController {
   }
 
   @Post('/reset')
-  async reset(@BodyParam('uuid') uuid: string,
+  async reset(@BodyParam('user') uuid: string,
               @BodyParam('code') code: string,
               @BodyParam('password') password: string): Promise<any> {
     const result = await this.service.reset(uuid, code, password)
