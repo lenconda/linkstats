@@ -29,14 +29,14 @@ export const renderRegisterHtml = (activeCode: string, username: string, email: 
                 <p>尊敬的 <strong>${username}</strong> 阁下：</p>
                 <p>在不久前，这个邮箱被用于注册 LinkStats 服务。但是，到目前为止，我们仍无法信任这个邮箱。因此，我们需要你点击下面的链接完成邮箱的验证：</p>
                 <p>
-                  <a href="${config.activePrefix}?user=${uuid}&code=${activeCode}" role="button" class="ant-btn ant-btn-primary ant-btn-lg">
+                  <a href="${config.activePrefix}?action=active&user=${uuid}&code=${activeCode}" role="button" class="ant-btn ant-btn-primary ant-btn-lg">
                     验证邮箱地址
                   </a>
                 </p>
                 <p>如果上面的按钮无法跳转，请点击如下链接完成验证：</p>
                 <p>
-                  <a href="${config.activePrefix}?user=${uuid}&code=${activeCode}">
-                    ${config.activePrefix}?user=${uuid}&code=${activeCode}
+                  <a href="${config.activePrefix}?action=active&user=${uuid}&code=${activeCode}">
+                    ${config.activePrefix}?action=active&user=${uuid}&code=${activeCode}
                   </a>
                 </p>
                 <p>
