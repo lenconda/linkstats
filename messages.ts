@@ -15,6 +15,7 @@ export const ERR_HANDLE_LINK = '解析链接失败'
 export const ERR_UNAUTHORIZED_RECORD = '没有权限'
 export const ERR_RECORD_NOTFOUND = '未找到记录'
 export const ERR_LINK_NOTFOUND = '未找到链接'
+export const ERR_UNKNOWN = '服务器错误'
 
 export const MSG_REGISTER_SUCCESS = '注册成功，请前往邮箱激活账户'
 export const MSG_ACTIVE_SUCCESS = '账户已被激活'

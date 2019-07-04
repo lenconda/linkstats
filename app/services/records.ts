@@ -36,7 +36,7 @@ export default class RecordsService {
           await RecordModel.count({ belongs: { $in: link ? link : links }})
       return { items, count }
     } catch (e) {
-      throw new InternalServerError(e.message)
+      throw new InternalServerError(messages.ERR_UNKNOWN)
     }
   }
 

@@ -39,7 +39,7 @@ export default class LinksService {
       })
       return { items, count }
     } catch (e) {
-      throw new InternalServerError(e.message)
+      throw new InternalServerError(messages.ERR_UNKNOWN)
     }
   }
 
