@@ -2,14 +2,12 @@ import jwt from 'jsonwebtoken'
 import config from '../../config'
 import { UnauthorizedError } from 'routing-controllers'
 
-export const generateToken = (payload: any): string => {
+export const generateToken = (payload: any, regen: boolean = false): string => {
   try {
     return jwt.sign(
-        {
-          ...payload,
-          exp: config.isDev ? null : Math.floor(Date.now() / 1000) + (60 * 60),
-        },
-        'linkstats')
+        payload,
+        'linkstats',
+        (config.isDev || regen) ? null : { expiresIn: '600000' })
   } catch (e) {
     throw e
   }
@@ -18,7 +16,7 @@ export const generateToken = (payload: any): string => {
 export const regenerateToken = (token: string): string => {
   try {
     const payload = jwt.verify(token, 'linkstats')
-    return generateToken(payload)
+    return generateToken(payload, true)
   } catch (e) {
     throw e
   }
