@@ -7,10 +7,9 @@ export const generateToken = (payload: any): string => {
     return jwt.sign(
         {
           ...payload,
-          exp: undefined,
+          exp: config.isDev ? null : Math.floor(Date.now() / 1000) + (60 * 60),
         },
-        'linkstats',
-        config.isDev ? null : { expiresIn: '600000' })
+        'linkstats')
   } catch (e) {
     throw e
   }
