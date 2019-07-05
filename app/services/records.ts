@@ -77,7 +77,7 @@ export default class RecordsService {
     const links = linksData.map((value, index) => value.uuid)
     const data: RecordMongo[] =
         await RecordModel.find({ belongs: { $in: link ? link : links }})
-    if (data) {
+    if (data.length > 0) {
       const items = data.map((value, index) => {
         return {
           uuid: value.uuid,
@@ -113,6 +113,6 @@ export default class RecordsService {
       const csv = json2csv.parse(items, fields)
       return { text: csv }
     } else
-      throw new NotFoundError(messages.ERR_RECORD_NOTFOUND)
+      throw new NotFoundError(messages.ERR_EMPTY_RECORD)
   }
 }
