@@ -21,6 +21,7 @@ export interface Link {
   belongs: string
   originalUrl: string
   shorternUrl: string
+  comment: string
   qrCode: string
   createTime: number
   updateTime: number

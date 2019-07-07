@@ -26,6 +26,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
+          comment,
           qrCode,
         } = value
         return {
@@ -34,6 +35,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
+          comment,
           qrCode,
         }
       })
@@ -54,17 +56,19 @@ export default class LinksService {
       createTime,
       originalUrl,
       shorternUrl,
+      comment,
       qrCode,
     } = data
     return {
       createTime,
       originalUrl,
       shorternUrl,
+      comment,
       qrCode,
     }
   }
 
-  async createNewLink(id: string, url: string): Promise<any> {
+  async createNewLink(id: string, url: string, comment: string): Promise<any> {
     try {
       const uuid = await generateUuid()
       const redirectUrl = `${config.recordPrefix}?to=${uuid}`
@@ -73,6 +77,7 @@ export default class LinksService {
       const createTime = Date.parse(new Date().toString())
       await LinkModel.insertMany([{
         uuid,
+        comment,
         belongs: id,
         originalUrl: url,
         shorternUrl,

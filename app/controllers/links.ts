@@ -35,8 +35,9 @@ export default class LinksController {
   @Authorized()
   @Post('')
   async createNewLink(@CurrentUser() id: string,
-                      @BodyParam('url') url: string): Promise<any> {
-    return await this.service.createNewLink(id, url)
+                      @BodyParam('url') url: string,
+                      @BodyParam('comment') comment: string = ''): Promise<any> {
+    return await this.service.createNewLink(id, url, comment)
   }
 
   @Authorized()

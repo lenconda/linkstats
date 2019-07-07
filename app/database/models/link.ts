@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
   belongs: { type: String, required: true },
   originalUrl: { type: String, required: true },
   shorternUrl: { type: String, required: true },
+  comment: { type: String, required: false, default: '' },
   qrCode: { type: String, required: true },
   createTime: { type: Number },
   updateTime: { type: Number },
