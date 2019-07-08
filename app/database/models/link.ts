@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
   comment: { type: String, required: false, default: '' },
   qrCode: { type: String, required: true },
   createTime: { type: Number },
-  updateTime: { type: Number },
+  updateTime: { type: Number, default: 0 },
 })
 
 export const LinkModel =

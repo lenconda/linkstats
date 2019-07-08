@@ -70,6 +70,15 @@ export default class LinksService {
     }
   }
 
+  async updateLink(userId: string, uuid: string, updates: any): Promise<any> {
+    const find = 
+      await LinkModel.findOne({ uuid, belongs: userId })
+    if (!find)
+      throw new NotFoundError(messages.ERR_LINK_NOTFOUND)
+    await LinkModel.updateOne({ uuid, belongs: userId }, { ...updates, updateTime: Date.now() })
+    return messages.MSG_UPDATE_LINK_SUCCESS
+  }
+
   async createNewLink(id: string, url: string, comment: string): Promise<any> {
     try {
       const uuid = await generateUuid()
