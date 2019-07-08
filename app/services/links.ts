@@ -54,6 +54,7 @@ export default class LinksService {
     }
     const {
       createTime,
+      updateTime,
       originalUrl,
       shorternUrl,
       comment,
@@ -61,6 +62,7 @@ export default class LinksService {
     } = data
     return {
       createTime,
+      updateTime,
       originalUrl,
       shorternUrl,
       comment,
