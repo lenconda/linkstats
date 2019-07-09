@@ -16,6 +16,7 @@ export default class RecordsController {
   @Get('/:id')
   async record(@Param('id') belongs: string,
                @Ctx() context: Context): Promise<any> {
-    return await this.service.record(belongs, context)
+    this.service.record(belongs, context)
+    return await this.service.get(belongs)
   }
 }

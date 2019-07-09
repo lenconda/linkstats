@@ -5,6 +5,8 @@ import { generateUuid } from '../util/uuid'
 import { Context } from 'koa'
 import uaDevice from 'ua-device'
 import { getGeoInfo } from '../util/ip_helper'
+import { NotFoundError } from 'routing-controllers'
+import { ERR_LINK_NOTFOUND } from '../../messages'
 
 @Service()
 export default class RedirectService {
@@ -67,6 +69,14 @@ export default class RedirectService {
         createTime: Date.parse(new Date().toString()),
       },
     ])
-    return { href: originalUrl }
+    return true
+  }
+
+  async get(uuid: string): Promise<any> {
+    const data = 
+      await LinkModel.findOne({ uuid })
+    if (!data)
+      throw new NotFoundError(ERR_LINK_NOTFOUND)
+    return { href: data.originalUrl }
   }
 }
