@@ -3,7 +3,7 @@ import { IPLocation } from '../interfaces'
 import cheerio from 'cheerio'
 
 
-export const getGeoInfo = async (ip: string, timeout: number = 15000): Promise<IPLocation> => {
+export const getGeoInfo = async (ip: string, timeout: number = 60000): Promise<IPLocation> => {
   axios.defaults.timeout = timeout
   try {
     const { data } = await axios.get(`https://www.geoiptool.com/en/?ip=${ip}`)
