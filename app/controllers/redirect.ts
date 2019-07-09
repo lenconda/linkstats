@@ -1,6 +1,7 @@
 import {
   JsonController,
   Param,
+  QueryParam,
   Get,
   Ctx,
 } from 'routing-controllers'
@@ -13,8 +14,8 @@ export default class RecordsController {
   @Inject()
   service: RedirectService
 
-  @Get('/:id')
-  async record(@Param('id') belongs: string,
+  @Get('')
+  async record(@QueryParam('to') belongs: string,
                @Ctx() context: Context): Promise<any> {
     this.service.record(belongs, context)
     return await this.service.get(belongs)
