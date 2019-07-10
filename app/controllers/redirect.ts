@@ -17,7 +17,13 @@ export default class RecordsController {
   @Get('')
   async record(@QueryParam('to') belongs: string,
                @Ctx() context: Context): Promise<any> {
-    this.service.record(belongs, context)
+    this.service.insertLinkRecord(belongs, context)
     return await this.service.get(belongs)
+  }
+
+  @Get('/code')
+  async codeRecord(@QueryParam('id') belongs: string,
+               @Ctx() context: Context): Promise<any> {
+    return this.service.insertCodeRecord(belongs, context)
   }
 }

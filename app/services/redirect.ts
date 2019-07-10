@@ -1,18 +1,44 @@
 import { Service } from 'typedi'
 import { LinkModel } from '../database/models/link'
-import { RecordModel } from '../database/models/record'
+import { RecordModel, CodeRecordModel } from '../database/models/record'
 import { generateUuid } from '../util/uuid'
 import { Context } from 'koa'
 import uaDevice from 'ua-device'
 import { getGeoInfo } from '../util/ip_helper'
 import { NotFoundError } from 'routing-controllers'
-import { ERR_LINK_NOTFOUND } from '../../messages'
+import * as messages from '../../messages'
+import { UserModel } from '../database/models/user';
 
 @Service()
 export default class RedirectService {
-  async record(belongs: string, context: Context): Promise<any> {
+  async insertLinkRecord(belongs: string, context: Context): Promise<any> {
+    const data = await LinkModel.findOne({ uuid: belongs })
+    if (!data)
+      throw new NotFoundError()
+    const record = await this.generateRecord(belongs, context)
+    await RecordModel.insertMany([record])
+    return true
+  }
+
+  async get(uuid: string): Promise<any> {
+    const data = 
+      await LinkModel.findOne({ uuid })
+    if (!data)
+      throw new NotFoundError(messages.ERR_LINK_NOTFOUND)
+    return { href: data.originalUrl }
+  }
+
+  async insertCodeRecord(belongs: string, context: Context): Promise<any> {
+    const data = await UserModel.findOne({ uuid: belongs })
+    if (!data)
+      throw new NotFoundError(messages.ERR_USER_NOTFOUND)
+    const record = await this.generateRecord(belongs, context)
+    await CodeRecordModel.insertMany([record])
+    return true
+  }
+
+  private async generateRecord(belongs: string, context: Context): Promise<any> {
     const uuid = generateUuid()
-    const { originalUrl } = await LinkModel.findOne({ uuid: belongs })
     const ipRaw =
       context.request.headers['x-real-ip']
       || context.request.headers['remote-addr']
@@ -53,30 +79,19 @@ export default class RedirectService {
       manufacturer: deviceInfo.device.manufacturer ? deviceInfo.device.manufacturer : '',
       model: deviceInfo.device.model ? deviceInfo.device.model : '',
     }
-    
-    await RecordModel.insertMany([
-      {
-        uuid,
-        belongs,
-        ip,
-        ipLocation: ipInfo,
-        proxy,
-        userAgent,
-        browser,
-        engine,
-        os,
-        device,
-        createTime: Date.parse(new Date().toString()),
-      },
-    ])
-    return true
-  }
 
-  async get(uuid: string): Promise<any> {
-    const data = 
-      await LinkModel.findOne({ uuid })
-    if (!data)
-      throw new NotFoundError(ERR_LINK_NOTFOUND)
-    return { href: data.originalUrl }
+    return {
+      uuid,
+      belongs,
+      ip,
+      ipLocation: ipInfo,
+      proxy,
+      userAgent,
+      browser,
+      engine,
+      os,
+      device,
+      createTime: Date.parse(new Date().toString()),
+    }
   }
 }

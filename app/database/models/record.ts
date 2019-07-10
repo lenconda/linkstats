@@ -43,3 +43,5 @@ const schema = new mongoose.Schema({
 
 export const RecordModel =
     mongoose.model<RecordMongo>('records', schema, 'records')
+export const CodeRecordModel = 
+  mongoose.model<RecordMongo>('code_records', schema, 'code_records')
