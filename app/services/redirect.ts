@@ -29,6 +29,7 @@ export default class RedirectService {
   }
 
   async insertCodeRecord(belongs: string, context: Context): Promise<any> {
+    console.log(belongs)
     const data = await UserModel.findOne({ uuid: belongs })
     if (!data)
       throw new NotFoundError(messages.ERR_USER_NOTFOUND)
@@ -43,6 +44,7 @@ export default class RedirectService {
       context.request.headers['x-real-ip']
       || context.request.headers['remote-addr']
       || context.request.headers['x-forwarded-for']
+      || context.ip
     const ip = ipRaw.substr(0, 7) === '::ffff:'
       ? ipRaw.substr(7)
       : ipRaw

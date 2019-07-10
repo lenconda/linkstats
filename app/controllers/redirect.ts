@@ -1,6 +1,5 @@
 import {
   JsonController,
-  Param,
   QueryParam,
   Get,
   Ctx,
@@ -23,7 +22,11 @@ export default class RecordsController {
 
   @Get('/code')
   async codeRecord(@QueryParam('id') belongs: string,
-               @Ctx() context: Context): Promise<any> {
-    return this.service.insertCodeRecord(belongs, context)
+                   @Ctx() context: Context): Promise<any> {
+    try {
+      return await this.service.insertCodeRecord(belongs, context)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
