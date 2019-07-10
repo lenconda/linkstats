@@ -29,7 +29,6 @@ export default class RedirectService {
   }
 
   async insertCodeRecord(belongs: string, context: Context): Promise<any> {
-    console.log(belongs)
     const data = await UserModel.findOne({ uuid: belongs })
     if (!data)
       throw new NotFoundError(messages.ERR_USER_NOTFOUND)
