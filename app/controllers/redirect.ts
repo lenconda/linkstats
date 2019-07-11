@@ -3,6 +3,8 @@ import {
   QueryParam,
   Get,
   Ctx,
+  Post,
+  BodyParam,
 } from 'routing-controllers'
 import RedirectService from '../services/redirect'
 import { Inject } from 'typedi'
@@ -20,11 +22,12 @@ export default class RecordsController {
     return await this.service.get(belongs)
   }
 
-  @Get('/code')
+  @Post('/code')
   async codeRecord(@QueryParam('id') belongs: string,
+                   @BodyParam('href') href: string,
                    @Ctx() context: Context): Promise<any> {
     try {
-      return await this.service.insertCodeRecord(belongs, context)
+      return await this.service.insertCodeRecord(belongs, href, context)
     } catch (e) {
       console.log(e)
     }

@@ -28,12 +28,15 @@ export default class RedirectService {
     return { href: data.originalUrl }
   }
 
-  async insertCodeRecord(belongs: string, context: Context): Promise<any> {
+  async insertCodeRecord(belongs: string, href: string, context: Context): Promise<any> {
     const data = await UserModel.findOne({ uuid: belongs })
     if (!data)
       throw new NotFoundError(messages.ERR_USER_NOTFOUND)
     const record = await this.generateRecord(belongs, context)
-    await CodeRecordModel.insertMany([record])
+    await CodeRecordModel.insertMany([{
+      ...record,
+      href,
+    }])
     return true
   }
 

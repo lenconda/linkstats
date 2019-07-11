@@ -58,6 +58,7 @@ export interface ProxyInfo {
 export interface Record {
   uuid: string
   belongs: string
+  href?: string | undefined
   ip: string
   ipLocation: IPLocation
   proxy: ProxyInfo
