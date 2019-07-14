@@ -36,6 +36,9 @@ export default class StatisticsService {
             },
         },
       ])
+      .sort({
+        count: -1,
+      })
       return data
     } 
     if (src === 'code') {
@@ -59,6 +62,9 @@ export default class StatisticsService {
             },
         },
       ])
+      .sort({
+        count: -1,
+      })
       return data
     }
   }
