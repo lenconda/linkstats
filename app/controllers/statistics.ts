@@ -3,6 +3,7 @@ import {
   Get,
   Authorized,
   CurrentUser,
+  QueryParam,
 } from 'routing-controllers'
 import StatisticsService from '../services/statistics'
 import { Inject } from 'typedi'
@@ -11,6 +12,13 @@ import { Inject } from 'typedi'
 export default class RecordsController {
   @Inject()
   service: StatisticsService
+
+  @Authorized()
+  @Get('/countries')
+  async getCountries(@CurrentUser() userId: string,
+                     @QueryParam('src') src: string): Promise<any> {
+    return await this.service.getCountries(userId, src)
+  }
 
   @Authorized()
   @Get('/basic')
