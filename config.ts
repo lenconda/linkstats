@@ -20,8 +20,8 @@ const config = {
   smtpUser: process.env.SMTP_USER,
   smtpToken: process.env.SMTP_PASSWORD,
   recordPrefix: 'https://linkstats.cc/redirect.html',
-  activePrefix: 'https://linkstats.cc/#/login',
-  resetPrefix: 'https://linkstats.cc/#/reset',
+  activePrefix: 'https://linkstats.cc/login',
+  resetPrefix: 'https://linkstats.cc/reset',
   productName: 'LinkStats',
 }
 
