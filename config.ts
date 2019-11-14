@@ -20,8 +20,8 @@ const config = {
   smtpUser: process.env.SMTP_USER,
   smtpToken: process.env.SMTP_PASSWORD,
   recordPrefix: 'https://linkstats.lenconda.top/redirect.html',
-  activePrefix: 'https://linkstats.lenconda.top/login',
-  resetPrefix: 'https://linkstats.lenconda.top/reset',
+  activePrefix: 'https://linkstats.lenconda.top/#/login',
+  resetPrefix: 'https://linkstats.lenconda.top/#/reset',
   productName: 'LinkStats',
 }
 
