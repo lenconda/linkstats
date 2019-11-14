@@ -19,9 +19,9 @@ const config = {
   smtpPort: parseInt(process.env.SMTP_PORT),
   smtpUser: process.env.SMTP_USER,
   smtpToken: process.env.SMTP_PASSWORD,
-  recordPrefix: 'https://linkstats.cc/redirect.html',
-  activePrefix: 'https://linkstats.cc/login',
-  resetPrefix: 'https://linkstats.cc/reset',
+  recordPrefix: 'https://linkstats.lenconda.top/redirect.html',
+  activePrefix: 'https://linkstats.lenconda.top/login',
+  resetPrefix: 'https://linkstats.lenconda.top/reset',
   productName: 'LinkStats',
 }
 
