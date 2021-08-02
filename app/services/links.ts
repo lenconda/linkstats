@@ -26,6 +26,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
+          comment,
           qrCode,
         } = value
         return {
@@ -34,6 +35,7 @@ export default class LinksService {
           updateTime,
           originalUrl,
           shorternUrl,
+          comment,
           qrCode,
         }
       })
@@ -52,19 +54,32 @@ export default class LinksService {
     }
     const {
       createTime,
+      updateTime,
       originalUrl,
       shorternUrl,
+      comment,
       qrCode,
     } = data
     return {
       createTime,
+      updateTime,
       originalUrl,
       shorternUrl,
+      comment,
       qrCode,
     }
   }
 
-  async createNewLink(id: string, url: string): Promise<any> {
+  async updateLink(userId: string, uuid: string, updates: any): Promise<any> {
+    const find = 
+      await LinkModel.findOne({ uuid, belongs: userId })
+    if (!find)
+      throw new NotFoundError(messages.ERR_LINK_NOTFOUND)
+    await LinkModel.updateOne({ uuid, belongs: userId }, { ...updates, updateTime: Date.now() })
+    return messages.MSG_UPDATE_LINK_SUCCESS
+  }
+
+  async createNewLink(id: string, url: string, comment: string): Promise<any> {
     try {
       const uuid = await generateUuid()
       const redirectUrl = `${config.recordPrefix}?to=${uuid}`
@@ -73,6 +88,7 @@ export default class LinksService {
       const createTime = Date.parse(new Date().toString())
       await LinkModel.insertMany([{
         uuid,
+        comment,
         belongs: id,
         originalUrl: url,
         shorternUrl,

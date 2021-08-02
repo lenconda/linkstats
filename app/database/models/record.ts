@@ -41,5 +41,22 @@ const schema = new mongoose.Schema({
   createTime: Number,
 })
 
+const codeSchema = new mongoose.Schema({
+  uuid: { type: String, index: true, required: true, unique: true },
+  belongs: { type: String, required: true },
+  ip: String,
+  ipLocation: ipLocationSchema,
+  proxy: proxySchema,
+  userAgent: String,
+  browser: versionNameSchema,
+  engine: versionNameSchema,
+  os: versionNameSchema,
+  device: deviceSchema,
+  createTime: Number,
+  href: String,
+})
+
 export const RecordModel =
     mongoose.model<RecordMongo>('records', schema, 'records')
+export const CodeRecordModel = 
+  mongoose.model<RecordMongo>('code_records', codeSchema, 'code_records')

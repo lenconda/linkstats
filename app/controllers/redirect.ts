@@ -1,8 +1,10 @@
 import {
   JsonController,
-  Param,
+  QueryParam,
   Get,
   Ctx,
+  Post,
+  BodyParam,
 } from 'routing-controllers'
 import RedirectService from '../services/redirect'
 import { Inject } from 'typedi'
@@ -13,9 +15,21 @@ export default class RecordsController {
   @Inject()
   service: RedirectService
 
-  @Get('/:id')
-  async record(@Param('id') belongs: string,
+  @Get('')
+  async record(@QueryParam('to') belongs: string,
                @Ctx() context: Context): Promise<any> {
-    return await this.service.record(belongs, context)
+    this.service.insertLinkRecord(belongs, context)
+    return await this.service.get(belongs)
+  }
+
+  @Post('/code')
+  async codeRecord(@QueryParam('id') belongs: string,
+                   @BodyParam('href') href: string,
+                   @Ctx() context: Context): Promise<any> {
+    try {
+      return await this.service.insertCodeRecord(belongs, href, context)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

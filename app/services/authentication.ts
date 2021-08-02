@@ -81,7 +81,7 @@ export default class AuthenticationService {
     if (!result)
       throw new ForbiddenError(messages.ERR_RESET_LINK_DISMATCH)
     else {
-      await UserModel.updateOne({ uuid }, { password, activeCode: '' })
+      await UserModel.updateOne({ uuid }, { password: md5(password), activeCode: '' })
       return messages.MSG_RESET_SUCCESS
     }
   }

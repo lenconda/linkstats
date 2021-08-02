@@ -8,6 +8,7 @@ import {
   BodyParam,
   Delete, 
   Param,
+  Put,
 } from 'routing-controllers'
 import LinksService from '../services/links'
 import { Inject } from 'typedi'
@@ -33,10 +34,19 @@ export default class LinksController {
   }
 
   @Authorized()
+  @Put('/:uuid')
+  async updateLink(@CurrentUser() userId: string, 
+                   @Param('uuid') uuid: string,
+                   @BodyParam('updates') updates: any): Promise<any> {
+    return await this.service.updateLink(userId, uuid, updates)
+  }
+
+  @Authorized()
   @Post('')
   async createNewLink(@CurrentUser() id: string,
-                      @BodyParam('url') url: string): Promise<any> {
-    return await this.service.createNewLink(id, url)
+                      @BodyParam('url') url: string,
+                      @BodyParam('comment') comment: string = ''): Promise<any> {
+    return await this.service.createNewLink(id, url, comment)
   }
 
   @Authorized()
